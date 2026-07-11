@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pragati | MSME Financial Health Card</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="MSME profile controls">
+        <div class="brand-row">
+          <div class="brand-mark">P</div>
+          <div>
+            <p class="eyebrow">MSME Credit Intelligence</p>
+            <h1>Pragati</h1>
+          </div>
+        </div>
+
+        <section class="control-section">
+          <div class="section-heading">
+            <h2>Enterprise Profile</h2>
+            <button class="ghost-button" id="resetProfile" type="button">Reset</button>
+          </div>
+
+          <label>
+            Business segment
+            <select id="segment">
+              <option value="retail">Retail trader</option>
+              <option value="manufacturing">Small manufacturer</option>
+              <option value="services">Local services</option>
+              <option value="food">Food business</option>
+            </select>
+          </label>
+
+          <div class="preset-row" aria-label="Scenario presets">
+            <button class="preset is-active" data-preset="balanced" type="button">Balanced</button>
+            <button class="preset" data-preset="growth" type="button">Growth</button>
+            <button class="preset" data-preset="thin" type="button">Thin File</button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading">
+            <h2>Alternate Data Signals</h2>
+          </div>
+
+          <label class="slider-label">
+            Monthly digital inflow
+            <span id="monthlyInflowValue"></span>
+            <input id="monthlyInflow" type="range" min="50000" max="2500000" step="25000" />
+          </label>
+
+          <label class="slider-label">
+            GST filing delay
+            <span id="gstDelayValue"></span>
+            <input id="gstDelay" type="range" min="0" max="120" step="1" />
+          </label>
+
+          <label class="slider-label">
+            UPI transaction density
+            <span id="upiDensityValue"></span>
+            <input id="upiDensity" type="range" min="5" max="500" step="5" />
+          </label>
+
+          <label class="slider-label">
+            Sales volatility
+            <span id="salesVolatilityValue"></span>
+            <input id="salesVolatility" type="range" min="0" max="100" step="1" />
+          </label>
+
+          <label class="slider-label">
+            Vendor payment delay
+            <span id="vendorDelayValue"></span>
+            <input id="vendorDelay" type="range" min="0" max="90" step="1" />
+          </label>
+
+          <label class="slider-label">
+            Average bank balance
+            <span id="bankBalanceValue"></span>
+            <input id="bankBalance" type="range" min="10000" max="1200000" step="10000" />
+          </label>
+
+          <label class="slider-label">
+            EPFO payroll stability
+            <span id="payrollStabilityValue"></span>
+            <input id="payrollStability" type="range" min="0" max="100" step="1" />
+          </label>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading">
+            <h2>Consent Connectors</h2>
+          </div>
+          <label class="switch-row"><input id="gstConnected" type="checkbox" checked /> GSTN connected</label>
+          <label class="switch-row"><input id="upiConnected" type="checkbox" checked /> UPI cash-flow feed</label>
+          <label class="switch-row"><input id="aaConnected" type="checkbox" checked /> Account Aggregator bank data</label>
+          <label class="switch-row"><input id="epfoConnected" type="checkbox" /> EPFO payroll data</label>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Financial Health Card</p>
+            <h2 id="businessTitle">Retail trader assessment</h2>
+          </div>
+          <div class="status-pill" id="decisionPill">Review</div>
+        </header>
+
+        <section class="hero-grid">
+          <div class="score-panel">
+            <div class="score-ring" aria-label="Financial health score">
+              <svg viewBox="0 0 160 160" role="img">
+                <circle class="ring-bg" cx="80" cy="80" r="66"></circle>
+                <circle class="ring-meter" id="scoreRing" cx="80" cy="80" r="66"></circle>
+              </svg>
+              <div class="score-center">
+                <span id="healthScore">72</span>
+                <small>/100</small>
+              </div>
+            </div>
+            <div class="score-copy">
+              <p class="eyebrow">Pragati Score</p>
+              <h3 id="scoreHeadline">Credit-ready with review triggers</h3>
+              <p id="scoreSummary">This MSME shows healthy digital cash flow, but compliance and liquidity signals need lender review.</p>
+            </div>
+          </div>
+
+          <div class="metric-strip">
+            <div>
+              <span>Default probability</span>
+              <strong id="pdMetric">18.4%</strong>
+            </div>
+            <div>
+              <span>Suggested limit</span>
+              <strong id="limitMetric">Rs. 8.4L</strong>
+            </div>
+            <div>
+              <span>Expected loss</span>
+              <strong id="lossMetric">Rs. 47K</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="panel dimensions-panel">
+            <div class="panel-heading">
+              <h3>Health Dimensions</h3>
+              <p>Normalized from alternate-data signals</p>
+            </div>
+            <div id="dimensionBars" class="bar-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h3>Decision Explanation</h3>
+              <p>Plain-language borrower-level attribution</p>
+            </div>
+            <div id="explanationList" class="explanation-list"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h3>Portfolio Impact</h3>
+              <p>Expected loss versus traditional screening</p>
+            </div>
+            <div class="impact-chart">
+              <div class="impact-row">
+                <span>Pragati selection</span>
+                <div class="impact-track"><div id="aiLossBar"></div></div>
+                <strong id="aiLossRate">8.6%</strong>
+              </div>
+              <div class="impact-row">
+                <span>Document-only baseline</span>
+                <div class="impact-track"><div id="baselineLossBar"></div></div>
+                <strong id="baselineLossRate">17.4%</strong>
+              </div>
+            </div>
+            <p class="insight" id="portfolioInsight">Estimated portfolio loss reduction: 50.6%.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <h3>Fairness Governance</h3>
+              <p>Approval parity with risk context</p>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Cohort</th>
+                  <th>Approval</th>
+                  <th>Risk</th>
+                  <th>DIR</th>
+                </tr>
+              </thead>
+              <tbody id="fairnessRows"></tbody>
+            </table>
+          </div>
+
+          <div class="panel wide-panel">
+            <div class="panel-heading">
+              <h3>Ecosystem Integration Map</h3>
+              <p>How Pragati fits ULI, OCEN, AA, GST, UPI, and EPFO flows</p>
+            </div>
+            <div class="integration-map">
+              <div><strong>Consent</strong><span>AA, GSTN, EPFO, UPI permissioned access</span></div>
+              <div><strong>Normalize</strong><span>Cash flow, compliance, payroll, liquidity signals</span></div>
+              <div><strong>Score</strong><span>Financial health, PD, limit, expected loss</span></div>
+              <div><strong>Explain</strong><span>Borrower-readable strengths and risks</span></div>
+              <div><strong>Route</strong><span>ULI discovery and OCEN loan journey handoff</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
